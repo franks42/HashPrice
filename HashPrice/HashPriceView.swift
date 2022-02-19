@@ -33,10 +33,6 @@ struct HashPriceView: View {
 //  @State private var hashAmtS: String = "0"
   @AppStorage("hashAmtS") private var hashAmtS: String = "0"
   
-//  @State private var utc24hChoice = Utc24h.H24
-  @AppStorage("utc24hChoice") private var utc24hChoice: Utc24h = Utc24h.H24
-
-  
   var body: some View {
     
     ZStack {
@@ -60,11 +56,9 @@ struct HashPriceView: View {
             
             TimeStampV(dlobState: dlobState)
             
-            Price24hView(dlobState: dlobState,
-                         utc24hChoice: $utc24hChoice)
+            Price24hView(dlobState: dlobState)
             
-            VolumeView(dlobState: dlobState,
-                       utc24hChoice: $utc24hChoice)
+            VolumeView(dlobState: dlobState)
             
             HashPortfolioV(hashAmtS: $hashAmtS, dlobState: dlobState)
             
@@ -90,8 +84,7 @@ struct HashPriceView: View {
           showConfigView: $showConfigView,
           pollingTimeSec: $pollingTimeSec,
           bgColor: $bgColor,
-          hashAmtS: $hashAmtS,
-          utc24hChoice: $utc24hChoice
+          hashAmtS: $hashAmtS
         )
         
       }
@@ -108,8 +101,6 @@ struct HashPriceView: View {
       }
       else
       {
-        // print("Not cancelled")
-        // await dlobState.fetchDlobState()
         await dlobState.updateDlobState()
         repeatLoadData()
       }

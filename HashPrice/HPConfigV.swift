@@ -15,21 +15,30 @@ struct HPConfigV: View {
   @Binding var pollingTimeSec: Float
   @Binding var bgColor: Color
   @Binding var hashAmtS: String
-  @Binding var utc24hChoice: Utc24h
 
   
   var body: some View {
     HStack {
-      Image(systemName: "info.circle")
+
+      Link(destination: URL(string: "https://github.com/franks42/HashPrice/wiki#what-is-this-hashprice-app-and-how-does-it-work")!) {
+          Image(systemName: "info.circle")
+              .font(.title3)
+      }
+      
       Spacer()
-      Text("Provenance Blockchain Foundation")
-        .font(.body)
-        .lineLimit(1)
-        .minimumScaleFactor(0.4)
+      
+      Link("Provenance Blockchain Foundation",
+           destination: URL(string: "https://provenance.io")!)
+          .font(.title3)
+          .lineLimit(1)
+          .minimumScaleFactor(0.4)
+      
       Spacer()
+      
       Button(action: { showConfigView = true }) {
         Image(systemName: "gear")
       }
+      .font(.title3)
       .fullScreenCover(
         isPresented: $showConfigView,
         content: {
@@ -37,8 +46,7 @@ struct HPConfigV: View {
                      showConfigView: $showConfigView,
                      pollingTimeSec: $pollingTimeSec,
                      bgColor: $bgColor,
-                     hashAmtS: $hashAmtS,
-                     utc24hChoice: $utc24hChoice
+                     hashAmtS: $hashAmtS
           )})
       
     }
@@ -56,7 +64,6 @@ struct HPConfigV_Previews: PreviewProvider {
   static var previews: some View {
     
     HPConfigV(dlobState: DlobState(), showConfigView: .constant(true), pollingTimeSec: .constant(10), bgColor: .constant(Color.gray),
-              hashAmtS: .constant("123"),
-              utc24hChoice: .constant(Utc24h.H24))
+              hashAmtS: .constant("123"))
   }
 }

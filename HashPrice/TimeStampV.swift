@@ -20,9 +20,8 @@ struct TimeStampV: View {
           .fontWeight(.bold)
           .multilineTextAlignment(.leading)
           .lineLimit(1)
-          .font(.title2)
+          .font(.title3)
           .minimumScaleFactor(0.4)
-        
         
         (
           Text(dlobState.dateStamp + " ")

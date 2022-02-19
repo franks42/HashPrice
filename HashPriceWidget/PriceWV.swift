@@ -107,10 +107,15 @@ struct PriceWV: View {
         Image("hash-logo-16x16")
           .aspectRatio(contentMode: .fill)
           .scaledToFit()
-        Text("$" + self.dlobState.xrate)
-          .font(Font.system(.title, design: .monospaced).monospacedDigit())
-          .font(.title)
-          .foregroundColor(.blue)
+        (
+          Text("$")
+            .font(.title)
+          +
+          Text(self.dlobState.xrate)
+            .font(Font.system(.title, design: .monospaced).monospacedDigit())
+            .font(.title)
+            .foregroundColor(.blue)
+        )
       }
       .multilineTextAlignment(.leading)
       .lineLimit(1)
@@ -128,31 +133,7 @@ struct PriceWV: View {
         .lineLimit(1)
       //.padding([.top, .leading, .trailing])
         .minimumScaleFactor(0.4)
-      
-      //        Text("Provenance Blockchain DLOB")
-      //          .fontWeight(.bold)
-      //          .multilineTextAlignment(.leading)
-      //          .lineLimit(1)
-      //        //.padding(.horizontal)
-      //          .font(.body)
-      //          .minimumScaleFactor(0.2)
-      //
-      //
-      //        (
-      //          Text(self.dlobState.xrate + " ")
-      //            .font(Font.system(.largeTitle, design: .monospaced).monospacedDigit())
-      //            .font(.largeTitle)
-      //            .foregroundColor(.blue)
-      //          +
-      //          Text("[$/Hash]")
-      //            .font(.body)
-      //        )
-      //          .fontWeight(.bold)
-      //          .multilineTextAlignment(.leading)
-      //          .lineLimit(1)
-      //          .minimumScaleFactor(0.4)
-      //        //.padding([.leading, .bottom])
-      
+            
       (
         Text("H/L:")
         +
@@ -160,7 +141,7 @@ struct PriceWV: View {
           .font(Font.system(.title3, design: .monospaced).monospacedDigit())
           .foregroundColor(.blue)
         +
-        Text("/")
+        Text(" / ")
           .font(.body)
           .fontWeight(.bold)
         +
@@ -181,11 +162,14 @@ struct PriceWV: View {
           .font(Font.system(.title3, design: .monospaced).monospacedDigit())
           .foregroundColor(.blue)
         +
-        Text("/")
+        Text(" / ")
           .font(.body)
           .fontWeight(.bold)
         +
-        Text("$" + dlobState.usdVolume)
+        Text("$")
+          .font(Font.system(.title3, design: .monospaced).monospacedDigit())
+        +
+        Text(dlobState.usdVolume)
           .font(Font.system(.title3, design: .monospaced).monospacedDigit())
           .foregroundColor(.blue)
       )
@@ -195,11 +179,8 @@ struct PriceWV: View {
         .lineLimit(1)
         .minimumScaleFactor(0.2)
     }
-    .padding([.top, .leading, .trailing])
-    //      Spacer()
+    .padding([.leading, .trailing])
   }
-  //
-  //  }
 }
 
 

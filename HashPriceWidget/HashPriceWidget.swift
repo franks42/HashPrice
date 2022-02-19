@@ -78,8 +78,29 @@ struct HashPriceWidgetEntryView : View {
         
         PriceWV(dlobState: entry.dlobState)
 
-        Text(entry.date, style: .time)
+        Divider()
+
+        (
+          Text(entry.dlobState.dateStamp)
+            .font(Font.system(.body, design: .monospaced).monospacedDigit())
+            .foregroundColor(.blue)
+          +
+          Text(" ")
+            .font(.body)
+            .fontWeight(.bold)
+          +
+          Text(entry.dlobState.timeStamp)
+            .font(Font.system(.body, design: .monospaced).monospacedDigit())
+            .foregroundColor(.blue)
+        )
           .font(.body)
+          .fontWeight(.bold)
+          .multilineTextAlignment(.leading)
+          .lineLimit(1)
+          .minimumScaleFactor(0.4)
+          .padding([.leading, .trailing])
+//        Text(entry.date, style: .time)
+//          .font(.body)
 
       }
     }
@@ -94,8 +115,8 @@ struct HashPriceWidget: Widget {
     StaticConfiguration(kind: kind, provider: Provider()) { entry in
       HashPriceWidgetEntryView(entry: entry)
     }
-    .configurationDisplayName("Hash Price Widget")
-    .description("Provenance Blockchain DLOB")
+    .configurationDisplayName("HashPrice Widget")
+    .description("Provenance Blockchain DLOB Exchange")
   }
 }
 

@@ -45,9 +45,7 @@ struct ConfigView: View {
   @Binding var pollingTimeSec: Float
   @Binding var bgColor: Color
   @Binding var hashAmtS: String
-  
-  @Binding var utc24hChoice: Utc24h
-  
+    
   let minPollingTime: Float = 5.0
   let maxPollingTime: Float = 3600.0
   let pollingTimeStep: Float = 5.0
@@ -83,15 +81,7 @@ struct ConfigView: View {
           PollingSliderView(pollingTimeSec: $pollingTimeSec)
           
           NotifyTimerSliderView(dlobState: dlobState)
-          
-          HStack {
-            Text("Volume trading-window:")
-            EnumPicker(selected: $utc24hChoice)
-          }
-          .padding()
-          .border(Color.green, width: 2)
-          
-          
+                    
           VStack {
             ColorPicker(selection: $bgColor) {
               Text("Background Color")
@@ -103,7 +93,6 @@ struct ConfigView: View {
           
           VStack {
             Text("Hash Portfolio [tokens]:")
-            // TextField("#tokens... ", text: $hashAmtS)
             TextField("", text: Binding(
               get: {hashAmtS},
               set: {hashAmtS = $0.filter{"0123456789".contains($0)}}))
@@ -131,7 +120,6 @@ struct ConfigView: View {
 
 struct FakeRandomPriceToggleView: View {
   @ObservedObject var dlobState: DlobState
-  //  @Binding var fakeRandomPrice: Bool
   
   var body: some View {
     HStack {

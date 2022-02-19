@@ -10,28 +10,18 @@ import SwiftUI
 struct Price24hView: View {
   
   @ObservedObject var dlobState: DlobState
-  @Binding var utc24hChoice: Utc24h
 
   var body: some View {
     
     HStack {
       VStack(alignment: .leading) {
         
-        if utc24hChoice == .H24 {
-          Text("Price - 24 Hour")
-            .fontWeight(.bold)
-            .multilineTextAlignment(.leading)
-            .lineLimit(1)
-            .font(.title2)
-            .minimumScaleFactor(0.4)
-        } else {
-          Text("Price - UTC")
-            .fontWeight(.bold)
-            .multilineTextAlignment(.leading)
-            .lineLimit(1)
-            .font(.title2)
-            .minimumScaleFactor(0.4)
-        }
+        Text("Price - 24 Hour")
+          .fontWeight(.bold)
+          .multilineTextAlignment(.leading)
+          .lineLimit(1)
+          .font(.title2)
+          .minimumScaleFactor(0.4)
         
         (
           Text("High:")
