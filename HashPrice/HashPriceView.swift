@@ -92,7 +92,7 @@ struct HashPriceView: View {
     
   }
   
-  @Sendable func repeatLoadData() {
+  func repeatLoadData() {
     Task {
       //      try await Task.sleep(nanoseconds: 5_000_000_000)
       try await Task.sleep(nanoseconds: (UInt64(pollingTimeSec) * 1000000000))

@@ -46,7 +46,7 @@ import UIKit
   func updateDlobState() async {
     print("updateDlobState - enter")
     
-    var decodedResponse1: OrderBooksResponse? = nil
+    var decodedResponse1: [OrderBooksResponse]? = nil
     
     if !self.fakeRandomPrice {
       
@@ -59,27 +59,27 @@ import UIKit
       
     } else {
       
-      decodedResponse1 = OrderBooksResponse.fetchFakeDlobState()
+      decodedResponse1 = [OrderBooksResponse.fetchFakeDlobState()]
       
     }
     
-    let decodedResponse: OrderBooksResponse! = decodedResponse1
+    let decodedResponse: OrderBooksResponse! = decodedResponse1![0]
     
     print("updateDlobState - fakeRandomPrice:", fakeRandomPrice)
     
     
-    let latestPricePerUnit_usd_hash = (Double(decodedResponse.latestPricePerUnit) ?? 0.0) * 10000000
-    let lowPricePerUnit_usd_hash = (Double(decodedResponse.lowPricePerUnit) ?? 0.0) * 10000000
-    let highPricePerUnit_usd_hash = (Double(decodedResponse.highPricePerUnit) ?? 0.0) * 10000000
-    let volumeTraded_hash = (Int64(decodedResponse.volumeTraded) ?? 0) / 1000000000
-    let volumeTraded_usd = Double(volumeTraded_hash) * (highPricePerUnit_usd_hash + lowPricePerUnit_usd_hash)/2.0
+    let latestPricePerUnit_usd_hash = decodedResponse.last_price
+    let lowPricePerUnit_usd_hash = decodedResponse.low
+    let highPricePerUnit_usd_hash = decodedResponse.high
+    let volumeTraded_hash = decodedResponse.target_volume
+    let volumeTraded_usd = decodedResponse.base_volume
     self.xrate = String(format: "%.3f", latestPricePerUnit_usd_hash)
     self.hxrate = String(format: "%.3f", highPricePerUnit_usd_hash)
     self.lxrate = String(format: "%.3f", lowPricePerUnit_usd_hash)
     self.hashVolume = volumeTraded_hash.withCommas()
-    self.usdVolume = Int(volumeTraded_usd).withCommas()
+    self.usdVolume = volumeTraded_usd.withCommas()
     print("updateDlobState - false - self.xrate:", self.xrate)
-    
+
     let timeFormatter = DateFormatter()
     let dateFormatter = DateFormatter()
     let now = Date()

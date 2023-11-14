@@ -25,6 +25,12 @@ class DlobWState: ObservableObject {
   @Published var dateStamp: String = "00/00/0000"
   @Published var timeStamp: String = "00:00:00"
   
+  @Published var askxrate: String = "0.666"
+  @Published var bidxrate: String = "0.666"
+
+  @Published var hashOmniVolume: String = "1,111,111"
+  @Published var usdOmniVolume: String = "222,222"
+
   @Published var hashAssets: Int = 1234567
   @Published var fakeRandomPrice: Bool = false
   @Published var notificationTimerMin: Float = 5
@@ -47,7 +53,7 @@ class DlobWState: ObservableObject {
   func updateDlobState() async {
     print("updateDlobWState - enter")
     
-    var decodedResponse1: OrderBooksResponse? = nil
+    var decodedResponse1: [OrderBooksResponse]? = nil
     
     if !self.fakeRandomPrice {
       
@@ -60,31 +66,49 @@ class DlobWState: ObservableObject {
       
     } else {
       
-      decodedResponse1 = OrderBooksResponse.fetchFakeDlobState()
+      decodedResponse1 = [OrderBooksResponse.fetchFakeDlobState()]
       
     }
     
-    let decodedResponse: OrderBooksResponse! = decodedResponse1
-    
     print("updateDlobWState - fakeRandomPrice:", fakeRandomPrice)
     
+    let decodedResponse2 : [OrderBooksResponse]! = decodedResponse1
     
-    let latestPricePerUnit_usd_hash = (Double(decodedResponse.latestPricePerUnit) ?? 0.0) * 10000000
-    let lowPricePerUnit_usd_hash = (Double(decodedResponse.lowPricePerUnit) ?? 0.0) * 10000000
-    let highPricePerUnit_usd_hash = (Double(decodedResponse.highPricePerUnit) ?? 0.0) * 10000000
-    let volumeTraded_hash = (Int64(decodedResponse.volumeTraded) ?? 0) / 1000000000
-    let volumeTraded_usd = Double(volumeTraded_hash) * (highPricePerUnit_usd_hash + lowPricePerUnit_usd_hash)/2.0
-    self.xrate = String(format: "%.3f", latestPricePerUnit_usd_hash)
-    self.hxrate = String(format: "%.3f", highPricePerUnit_usd_hash)
-    self.lxrate = String(format: "%.3f", lowPricePerUnit_usd_hash)
-    self.hashVolume = volumeTraded_hash.withCommas()
-    self.usdVolume = Int(volumeTraded_usd).withCommas()
+    for decodedResponse in decodedResponse2 {
+      
+      if decodedResponse.ticker_id == "HASH_USD" {
+        let latestPricePerUnit_usd_hash = decodedResponse.last_price
+        let lowPricePerUnit_usd_hash = decodedResponse.low
+        let highPricePerUnit_usd_hash = decodedResponse.high
+        let latestAskPricePerUnit_usd_hash = decodedResponse.ask
+        let latestBidPricePerUnit_usd_hash = decodedResponse.bid
+        let volumeTraded_hash = decodedResponse.target_volume
+        let volumeTraded_usd = decodedResponse.base_volume
+
+        self.xrate = String(format: "%.3f", latestPricePerUnit_usd_hash)
+        self.hxrate = String(format: "%.3f", highPricePerUnit_usd_hash)
+        self.lxrate = String(format: "%.3f", lowPricePerUnit_usd_hash)
+        self.hashVolume = volumeTraded_hash.withCommas()
+        self.usdVolume = Int(volumeTraded_usd).withCommas()
+        
+        self.askxrate = String(format: "%.3f", latestAskPricePerUnit_usd_hash)
+        self.bidxrate = String(format: "%.3f", latestBidPricePerUnit_usd_hash)
+
+      } else {
+        if decodedResponse.ticker_id == "HASH_USDOMNI" {
+          let volumeTraded_hash = decodedResponse.target_volume
+          let volumeTraded_usd = decodedResponse.base_volume
+          self.hashOmniVolume = volumeTraded_hash.withCommas()
+          self.usdOmniVolume = Int(volumeTraded_usd).withCommas()
+        }
+      }
+    }
+    
     print("updateDlobWState - false - self.xrate:", self.xrate)
-    
-    let timeFormatter = DateFormatter()
+
     let dateFormatter = DateFormatter()
+    let timeFormatter = DateFormatter()
     let now = Date()
-    //HH:mm:ss MM/dd/yyyy
     dateFormatter.dateFormat = "MM/dd/yyyy"
     timeFormatter.dateFormat = "HH:mm:ss"
     self.dateStamp = dateFormatter.string(from: now)
