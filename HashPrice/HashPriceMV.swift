@@ -20,6 +20,7 @@ import UIKit
   @Published var lxrate: String = "0.111"
   @Published var hashVolume: String = "1,111,111"
   @Published var usdVolume: String = "222,222"
+  
   @Published var dateStamp: String = "00/00/0000"
   @Published var timeStamp: String = "00:00:00"
   
@@ -76,8 +77,8 @@ import UIKit
     self.xrate = String(format: "%.3f", latestPricePerUnit_usd_hash)
     self.hxrate = String(format: "%.3f", highPricePerUnit_usd_hash)
     self.lxrate = String(format: "%.3f", lowPricePerUnit_usd_hash)
-    self.hashVolume = volumeTraded_hash.withCommas()
-    self.usdVolume = volumeTraded_usd.withCommas()
+    self.hashVolume = Int64(volumeTraded_hash).withCommas()
+    self.usdVolume = Int64(volumeTraded_usd).withCommas()
     print("updateDlobState - false - self.xrate:", self.xrate)
 
     let timeFormatter = DateFormatter()

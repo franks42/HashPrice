@@ -88,8 +88,8 @@ class DlobWState: ObservableObject {
         self.xrate = String(format: "%.3f", latestPricePerUnit_usd_hash)
         self.hxrate = String(format: "%.3f", highPricePerUnit_usd_hash)
         self.lxrate = String(format: "%.3f", lowPricePerUnit_usd_hash)
-        self.hashVolume = volumeTraded_hash.withCommas()
-        self.usdVolume = Int(volumeTraded_usd).withCommas()
+        self.hashVolume = Int64(volumeTraded_hash).withCommas()
+        self.usdVolume = Int64(volumeTraded_usd).withCommas()
         
         self.askxrate = String(format: "%.3f", latestAskPricePerUnit_usd_hash)
         self.bidxrate = String(format: "%.3f", latestBidPricePerUnit_usd_hash)
@@ -98,8 +98,8 @@ class DlobWState: ObservableObject {
         if decodedResponse.ticker_id == "HASH_USDOMNI" {
           let volumeTraded_hash = decodedResponse.target_volume
           let volumeTraded_usd = decodedResponse.base_volume
-          self.hashOmniVolume = volumeTraded_hash.withCommas()
-          self.usdOmniVolume = Int(volumeTraded_usd).withCommas()
+          self.hashOmniVolume = Int64(volumeTraded_hash).withCommas()
+          self.usdOmniVolume = Int64(volumeTraded_usd).withCommas()
         }
       }
     }

@@ -84,7 +84,10 @@ struct ConfigView: View {
                     
           VStack {
             ColorPicker(selection: $bgColor) {
-              Text("Background Color")
+              Button(action: {bgColor = Color(.sRGB, red:0.580, green:0.695, blue:1.000)}) {
+                Text("Background Color")
+                  .foregroundColor(.black)
+              }
             }
           }
           .padding()
