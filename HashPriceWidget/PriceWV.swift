@@ -13,6 +13,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 //@MainActor class DlobWState: ObservableObject {
 class DlobWState: ObservableObject {
@@ -35,6 +36,8 @@ class DlobWState: ObservableObject {
   @Published var fakeRandomPrice: Bool = false
   @Published var notificationTimerMin: Float = 5
   
+  @Published var appVersion: String = "???"
+
   //
   
   static var theDlobWState: DlobWState? = nil
@@ -52,6 +55,14 @@ class DlobWState: ObservableObject {
   
   func updateDlobState() async {
     print("updateDlobWState - enter")
+    
+    if let appVersion1 = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
+      self.appVersion = appVersion1
+      print("App version: \(appVersion1)")
+    } else {
+       print("your platform does not support this feature.")
+    }
+    
     
     var decodedResponse1: [OrderBooksResponse]? = nil
     
@@ -74,9 +85,13 @@ class DlobWState: ObservableObject {
     
     let decodedResponse2 : [OrderBooksResponse]! = decodedResponse1
     
+    var hasHashUsdTicker : Bool = false
+    
     for decodedResponse in decodedResponse2 {
       
       if decodedResponse.ticker_id == "HASH_USD" {
+        hasHashUsdTicker = true
+        
         let latestPricePerUnit_usd_hash = decodedResponse.last_price
         let lowPricePerUnit_usd_hash = decodedResponse.low
         let highPricePerUnit_usd_hash = decodedResponse.high
@@ -93,15 +108,14 @@ class DlobWState: ObservableObject {
         
         self.askxrate = String(format: "%.3f", latestAskPricePerUnit_usd_hash)
         self.bidxrate = String(format: "%.3f", latestBidPricePerUnit_usd_hash)
-
-      } else {
-        if decodedResponse.ticker_id == "HASH_USDOMNI" {
-          let volumeTraded_hash = decodedResponse.target_volume
-          let volumeTraded_usd = decodedResponse.base_volume
-          self.hashOmniVolume = Int64(volumeTraded_hash).withCommas()
-          self.usdOmniVolume = Int64(volumeTraded_usd).withCommas()
-        }
+        
+        break
       }
+    }
+    
+    if !hasHashUsdTicker {
+      print("updateDlobWState - ERROR - No HASH_USD ticker_id in OrderBooksResponse array")
+      return  // nothing to update
     }
     
     print("updateDlobWState - false - self.xrate:", self.xrate)

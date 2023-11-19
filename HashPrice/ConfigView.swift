@@ -45,6 +45,7 @@ struct ConfigView: View {
   @Binding var pollingTimeSec: Float
   @Binding var bgColor: Color
   @Binding var hashAmtS: String
+
     
   let minPollingTime: Float = 5.0
   let maxPollingTime: Float = 3600.0
@@ -61,9 +62,11 @@ struct ConfigView: View {
         VStack {
           HStack {
             
-            Text("Hash Price Config")
+            Text("Hash Price Config ")
               .font(.title3)
               .fontWeight(.bold)
+            
+            Text("(v\(dlobState.appVersion))")
             
             Spacer()
             
