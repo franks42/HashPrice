@@ -1,9 +1,9 @@
-//
-//  HashPriceMV.swift
-//  HashPrice
-//
-//  Created by Frank Siebenlist on 1/13/22.
-//
+  //
+  //  HashPriceMV.swift
+  //  HashPrice
+  //
+  //  Created by Frank Siebenlist on 1/13/22.
+  //
 
 import SwiftUI
 import Foundation
@@ -29,21 +29,21 @@ import UIKit
   @Published var notificationTimerMin: Float = 15
   
   @Published var appVersion: String = "???"
-
-  //
+  
+    //
   
   static var theDlobState: DlobState? = nil
   var previousPricePerUnit_usd_hash_badge: Int = 0
   var previous_xrate = ""
   
-  //
+    //
   
   static func getDlobState() -> DlobState {
     if theDlobState == nil { theDlobState = DlobState()}
     return theDlobState!
   }
   
-  // methods
+    // methods
   
   
   func updateDlobState() async {
@@ -53,9 +53,9 @@ import UIKit
       self.appVersion = appVersion1
       print("App version: \(appVersion1)")
     } else {
-       print("your platform does not support this feature.")
+      print("your platform does not support this feature.")
     }
-
+    
     var decodedResponse1: [OrderBooksResponse]? = nil
     
     if !self.fakeRandomPrice {
@@ -73,7 +73,7 @@ import UIKit
       
     }
     
-    // let decodedResponse: OrderBooksResponse! = decodedResponse1![0]
+      // let decodedResponse: OrderBooksResponse! = decodedResponse1![0]
     
     print("updateDlobState - fakeRandomPrice:", fakeRandomPrice)
     
@@ -96,12 +96,12 @@ import UIKit
         self.hashVolume = Int64(volumeTraded_hash).withCommas()
         self.usdVolume = Int64(volumeTraded_usd).withCommas()
         
-        print("updateDlobState - false! - self.xrate:", self.xrate)
+        print("updateDlobState - false - self.xrate:", self.xrate)
         
         let timeFormatter = DateFormatter()
         let dateFormatter = DateFormatter()
         let now = Date()
-        //HH:mm:ss MM/dd/yyyy
+          //HH:mm:ss MM/dd/yyyy
         dateFormatter.dateFormat = "MM/dd/yyyy"
         timeFormatter.dateFormat = "HH:mm:ss"
         self.dateStamp = dateFormatter.string(from: now)
@@ -111,30 +111,30 @@ import UIKit
         if previousPricePerUnit_usd_hash_badge != latestPricePerUnit_usd_hash_badge {
           previousPricePerUnit_usd_hash_badge = latestPricePerUnit_usd_hash_badge
           DispatchQueue.main.async {
-            //          UNUserNotificationCenter.current().requestAuthorization(options: .badge) { (granted, error) in
-            //            if (error == nil && granted) {
+              //          UNUserNotificationCenter.current().requestAuthorization(options: .badge) { (granted, error) in
+              //            if (error == nil && granted) {
             print("UIApplication.shared.applicationIconBadgeNumber", latestPricePerUnit_usd_hash_badge)
             UIApplication.shared.applicationIconBadgeNumber = latestPricePerUnit_usd_hash_badge
-            //        }
-            //      }
+              //        }
+              //      }
           } //DispatchQueue
         } // if previousPricePerUnit...
         
         if self.xrate != previous_xrate {
           previous_xrate = self.xrate
-          // Push Local Notifications
+            // Push Local Notifications
           let hashNotificationRequestId = "hashNotificationRequestId"
           let content = UNMutableNotificationContent()
-          //      content.title =    "HASH_USD: $" + self.xrate
+            //      content.title =    "HASH_USD: $" + self.xrate
           content.title =    self.xrate + " $/Hash"
           content.subtitle = "H/L: " + self.hxrate + " / " + self.lxrate
-          //      content.subtitle = "H/L/V: " + self.hxrate + " / " + self.lxrate + " / " + self.usdVolume
-          //content.sound = UNNotificationSound.default
-          // show this notification one seconds from now
+            //      content.subtitle = "H/L/V: " + self.hxrate + " / " + self.lxrate + " / " + self.usdVolume
+            //content.sound = UNNotificationSound.default
+            // show this notification one seconds from now
           let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-          // choose a random identifier
+            // choose a random identifier
           let request = UNNotificationRequest(identifier: hashNotificationRequestId, content: content, trigger: trigger)
-          // add our notification request
+            // add our notification request
           Task() {
             do {
               try await UNUserNotificationCenter.current().add(request)

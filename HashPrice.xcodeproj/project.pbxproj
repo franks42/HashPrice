@@ -25,7 +25,7 @@
 		577007432796524B004A0662 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 577007422796524B004A0662 /* SwiftUI.framework */; };
 		577007462796524B004A0662 /* HashPriceWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577007452796524B004A0662 /* HashPriceWidget.swift */; };
 		577007482796524E004A0662 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 577007472796524E004A0662 /* Assets.xcassets */; };
-		5770074C2796524E004A0662 /* HashPriceWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 5770073E2796524A004A0662 /* HashPriceWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5770074C2796524E004A0662 /* HashPriceWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5770073E2796524A004A0662 /* HashPriceWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		57700752279766AA004A0662 /* HashPriceM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770072427909EEB004A0662 /* HashPriceM.swift */; };
 		577007552797682A004A0662 /* PriceWV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577007542797682A004A0662 /* PriceWV.swift */; };
 		57CE5FE727992B30006114D7 /* Color+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CE5FE627992B30006114D7 /* Color+Codable.swift */; };
@@ -43,15 +43,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		577007502796524E004A0662 /* Embed App Extensions */ = {
+		577007502796524E004A0662 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				5770074C2796524E004A0662 /* HashPriceWidgetExtension.appex in Embed App Extensions */,
+				5770074C2796524E004A0662 /* HashPriceWidgetExtension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -185,7 +185,7 @@
 				5770070F27909E19004A0662 /* Sources */,
 				5770071027909E19004A0662 /* Frameworks */,
 				5770071127909E19004A0662 /* Resources */,
-				577007502796524E004A0662 /* Embed App Extensions */,
+				577007502796524E004A0662 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -222,7 +222,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1320;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					5770071227909E19004A0662 = {
 						CreatedOnToolsVersion = 13.2.1;
@@ -351,6 +351,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -412,6 +413,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
